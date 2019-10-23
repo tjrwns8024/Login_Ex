@@ -31,7 +31,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:cardCornerRadius="30sp"
+        app:cardCornerRadius="20sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline6"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline"
@@ -130,7 +130,7 @@
                 android:background="@drawable/one_corner_radious"
                 android:text="Sign in"
                 android:textColor="#ffffff"
-                android:textSize="30sp"
+                android:textSize="35dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
