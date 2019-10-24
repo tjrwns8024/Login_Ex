@@ -13,19 +13,24 @@ import com.google.android.material.textfield.TextInputLayout;
 public class Signup extends AppCompatActivity {
 
     TextInputLayout signup_edit_password_ck_area;
+    TextInputLayout signup_edit_code_area;
     TextInputLayout signup_edit_id_area;
     TextInputLayout signup_edit_user_area;
+    TextInputEditText signup_code;
     TextInputEditText signup_id;
     TextInputEditText signup_password;
     TextInputEditText signup_password_ck;
     TextInputEditText signup_user;
     Button complete_signup;
+    String a = "030916";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        signup_code = findViewById(R.id.signup_code);
+        signup_edit_code_area = findViewById(R.id.signup_edit_code_area);
         signup_edit_user_area = findViewById(R.id.signup_edit_user_area);
         signup_edit_password_ck_area = findViewById(R.id.signup_edit_password_ck_area);
         signup_edit_id_area = findViewById(R.id.signup_edit_id_area);
@@ -38,6 +43,7 @@ public class Signup extends AppCompatActivity {
         signup_edit_id_area.setErrorEnabled(true);
         signup_edit_password_ck_area.setEnabled(true);
         signup_edit_user_area.setErrorEnabled(true);
+        signup_edit_code_area.setErrorEnabled(true);
 
        complete_signup.setOnClickListener(new View.OnClickListener() {
            @Override
@@ -45,6 +51,7 @@ public class Signup extends AppCompatActivity {
                emailError(signup_id.getText().toString());
                passwordCheck(signup_password.getText().toString(), signup_password_ck.getText().toString());
                userName(signup_user.getText().toString());
+               Verification(signup_code.getText().toString());
            }
        });
     }
@@ -68,5 +75,12 @@ public class Signup extends AppCompatActivity {
         }
         else
             signup_edit_user_area.setError("4~12글자 이내로 입력해주세요");
+    }
+    public void Verification(String signup_code){
+        if(signup_code.equals(a)){
+            signup_edit_code_area.setError("");
+        }
+        else
+            signup_edit_code_area.setError("인증번호가 일치 하지 않아요");
     }
 }
