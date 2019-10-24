@@ -44,6 +44,7 @@ public class Signup extends AppCompatActivity {
            public void onClick(View v) {
                emailError(signup_id.getText().toString());
                passwordCheck(signup_password.getText().toString(), signup_password_ck.getText().toString());
+               userName(signup_user.getText().toString());
            }
        });
     }
@@ -61,5 +62,11 @@ public class Signup extends AppCompatActivity {
         else
             signup_edit_password_ck_area.setError("비밀번호가 일치하지 않아요");
         }
-
+    public void userName(String signup_user){
+        if(signup_user.length()>3 && signup_user.length()<=12){
+            signup_edit_user_area.setError("");
+        }
+        else
+            signup_edit_user_area.setError("4~12글자 이내로 입력해주세요");
+    }
 }
