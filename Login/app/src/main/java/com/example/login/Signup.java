@@ -60,7 +60,7 @@ public class Signup extends AppCompatActivity {
             signup_edit_id_area.setError("");
         }
         else
-            signup_edit_id_area.setError("이메일 형식대로 입력해주세요");
+            signup_edit_id_area.setError("이메일 형식에 맞게 입력해주세요");
     }
     public void passwordCheck(String signup_password, String signup_password_ck){
         if(signup_password .equals(signup_password_ck)) {
