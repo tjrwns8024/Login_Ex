@@ -12,6 +12,10 @@ import com.example.login.databinding.ActivitySignupBinding;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class Signup extends AppCompatActivity {
 
     ActivitySignupBinding signup;
@@ -22,7 +26,7 @@ public class Signup extends AppCompatActivity {
         signup = DataBindingUtil.setContentView(this,R.layout.activity_signup);
 
         signup.signupEditIdArea.setErrorEnabled(true);
-        signup.signupEditPasswordCkArea.setEnabled(true);
+        signup.signupEditPasswordCkArea.setErrorEnabled(true);
         signup.signupEditUserArea.setErrorEnabled(true);
 
        signup.completeSignup.setOnClickListener(new View.OnClickListener() {
@@ -33,6 +37,7 @@ public class Signup extends AppCompatActivity {
                userName(signup.signupUser.getText().toString());
            }
        });
+       signup_post();
     }
     public void emailError(String signup_id){
         if(android.util.Patterns.EMAIL_ADDRESS.matcher(signup_id).matches()){
@@ -54,6 +59,37 @@ public class Signup extends AppCompatActivity {
         }
         else
             signup.signupEditUserArea.setError("4~12글자 이내로 입력해주세요");
+    }
+
+    public void signup_post(){
+        Retrofit retrofit = new Retrofit();
+        ApiInterface apiInterface = retrofit.apiInterface;
+
+        String signup_id;
+        String signup_pw;
+        String signup_pw_ck;
+        String signup_name;
+
+        signup_id = signup.signupId.getText().toString();
+        signup_pw = signup.signupPassword.getText().toString();
+        signup_pw_ck = signup.signupPasswordCk.getText().toString();
+        signup_name = signup.signupUser.getText().toString();
+
+
+        Call<JsonParse> call = apiInterface.signupPost(signup_id,signup_pw,signup_pw_ck,signup_name);
+        call.enqueue(new Callback<JsonParse>() {
+            @Override
+            public void onResponse(Call<JsonParse> call, Response<JsonParse> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<JsonParse> call, Throwable t) {
+
+            }
+        });
+
+
     }
 
 }

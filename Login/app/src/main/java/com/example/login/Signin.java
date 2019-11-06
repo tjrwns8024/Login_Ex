@@ -57,19 +57,19 @@ public class Signin extends AppCompatActivity {
 
     public void signin_post() {
         Retrofit retrofit = new Retrofit();
-
         ApiInterface apiInterface = retrofit.apiInterface;
-        String id;
-        String pw;
-        id = signin_bind.signinId.getText().toString();
-        pw = signin_bind.signinPassword.getText().toString();
-        User user = new User(id, pw);
 
-        Call<JsonParse> call = apiInterface.getPost(user);
+        String signin_id;
+        String signin_pw;
+
+        signin_id = signin_bind.signinId.getText().toString();
+        signin_pw = signin_bind.signinPassword.getText().toString();
+
+        Call<JsonParse> call = apiInterface.signinPost(signin_id,signin_pw);
         call.enqueue(new Callback<JsonParse>() {
             @Override
             public void onResponse(Call<JsonParse> call, Response<JsonParse> response) {
-                if(response.code() == 200){
+                if(response.code() == 201){
                 }
             }
             @Override
