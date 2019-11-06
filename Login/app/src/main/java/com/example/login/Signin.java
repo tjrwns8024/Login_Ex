@@ -1,6 +1,7 @@
 package com.example.login;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,50 +10,43 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.login.databinding.ActivitySigninBinding;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 public class Signin extends AppCompatActivity {
 
-    TextView go_signup;
-    TextInputEditText signin_id;
-    TextInputLayout signin_edit_id_area;
-    Button signin_btn;
+   ActivitySigninBinding signin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_signin);
+        signin = DataBindingUtil.setContentView(this,R.layout.activity_signin);
 
-        signin_btn = findViewById(R.id.signin_btn);
-        go_signup = findViewById(R.id.go_signup);
-        signin_id = findViewById(R.id.signin_id);
-        signin_edit_id_area = findViewById(R.id.signin_edit_id_area);
+        signin.signinEditIdArea.setErrorEnabled(true);
 
-        signin_edit_id_area.setErrorEnabled(true);
-
-        go_signup.setOnClickListener(new View.OnClickListener() {
-            @Override
+        signin.goSignup.setOnClickListener(new View.OnClickListener() {
+            @Override   
             public void onClick(View v) {
                 Intent intent = new Intent(Signin.this, Signup.class);
                 startActivity(intent);
             }
         });
 
-        signin_btn.setOnClickListener(new View.OnClickListener() {
+        signin.signinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signin_email_check(signin_id.getText().toString());
+                signin_email_check(signin.signinId.getText().toString());
             }
         });
 
     }
     public void signin_email_check(String signin_id){
         if(android.util.Patterns.EMAIL_ADDRESS.matcher(signin_id).matches()){
-            signin_edit_id_area.setError("");
+            signin.signinEditIdArea.setError("");
         }
         else {
-            signin_edit_id_area.setError("이메일 형식에 맞게 입력해주세요");
+            signin.signinEditIdArea.setError("이메일 형식에 맞게 입력해주세요");
         }
     }
 }
