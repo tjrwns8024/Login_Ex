@@ -1,4 +1,4 @@
-package com.example.login;
+package com.example.login.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -6,14 +6,14 @@ import androidx.databinding.DataBindingUtil;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Patterns;
 import android.view.View;
-import android.widget.Button;
-import android.widget.TextView;
 
+import com.example.login.Api.ApiInterface;
+import com.example.login.Entity.JsonParse;
+import com.example.login.R;
+import com.example.login.Api.Retrofit;
+import com.example.login.Entity.User;
 import com.example.login.databinding.ActivitySigninBinding;
-import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -42,16 +42,22 @@ public class Signin extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 signin_email_check(signin_bind.signinId.getText().toString());
+
+                boolean isEmailCheck = signin_email_check(signin_bind.signinId.getText().toString());
+
+                if(isEmailCheck)
+                    signin_post();
             }
         });
-        signin_post();
     }
 
-    public void signin_email_check(String signin_id) {
+    public boolean signin_email_check(String signin_id) {
         if (android.util.Patterns.EMAIL_ADDRESS.matcher(signin_id).matches()) {
             signin_bind.signinEditIdArea.setError("");
+            return true;
         } else {
             signin_bind.signinEditIdArea.setError("이메일 형식에 맞게 입력해주세요");
+            return false;
         }
     }
 
@@ -65,11 +71,19 @@ public class Signin extends AppCompatActivity {
         signin_id = signin_bind.signinId.getText().toString();
         signin_pw = signin_bind.signinPassword.getText().toString();
 
-        Call<JsonParse> call = apiInterface.signinPost(signin_id,signin_pw);
+        User user = new User(signin_id, signin_pw);
+
+        Call<JsonParse> call = apiInterface.signinPost(user);
         call.enqueue(new Callback<JsonParse>() {
             @Override
             public void onResponse(Call<JsonParse> call, Response<JsonParse> response) {
-                if(response.code() == 201){
+                if(response.code()/100 == 2 ){
+                    Log.d("succes","complete");
+                    Intent intent = new Intent(Signin.this, MainActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Log.e("response.code",""+response.code());
                 }
             }
             @Override
