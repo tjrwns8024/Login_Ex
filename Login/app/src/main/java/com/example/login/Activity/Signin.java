@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,8 @@ import com.example.login.Api.Retrofit;
 import com.example.login.Entity.User;
 import com.example.login.databinding.ActivitySigninBinding;
 
+import java.util.prefs.Preferences;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -22,6 +25,8 @@ import retrofit2.Response;
 public class Signin extends AppCompatActivity {
 
     ActivitySigninBinding signin_bind;
+    String jwt;
+    private SharedPreferences mPreferneces;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +84,17 @@ public class Signin extends AppCompatActivity {
             public void onResponse(Call<JsonParse> call, Response<JsonParse> response) {
                 if(response.code()/100 == 2 ){
                     Log.d("succes","complete");
+                    jwt = response.body().getToken();
+
                     Intent intent = new Intent(Signin.this, MainActivity.class);
                     startActivity(intent);
+
+                    Log.d("jwt",""+response.body().getToken());
+
+                    mPreferneces = getSharedPreferences("com.example.login.Activity",MODE_PRIVATE);
+                    SharedPreferences.Editor preferencesEditor = mPreferneces.edit();
+                    preferencesEditor.putString("token",jwt);
+                    preferencesEditor.apply();
                 }
                 else{
                     Log.e("response.code",""+response.code());
