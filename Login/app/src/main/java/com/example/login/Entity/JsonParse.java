@@ -1,4 +1,4 @@
-package com.example.login;
+package com.example.login.Entity;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -8,6 +8,20 @@ public class JsonParse {
 
     @SerializedName("userPw")
     private String userPw;
+
+    @SerializedName("userName")
+    private String name;
+
+    @SerializedName("access_token")
+    private String token;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public String getUserId() {
         return userId;
