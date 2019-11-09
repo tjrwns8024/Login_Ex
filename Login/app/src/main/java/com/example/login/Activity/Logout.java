@@ -68,7 +68,8 @@ public class Logout extends AppCompatActivity {
         main.enqueue(new Callback<JsonParse>() {
             @Override
             public void onResponse(Call<JsonParse> call, Response<JsonParse> response) {
-                name.setText(response.body().getName());
+                if(response.code() == 200)
+                    name.setText(response.body().getName());
             }
 
             @Override
