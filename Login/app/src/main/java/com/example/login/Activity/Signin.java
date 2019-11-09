@@ -86,7 +86,7 @@ public class Signin extends AppCompatActivity {
                     Log.d("succes","complete");
                     jwt = response.body().getToken();
 
-                    Intent intent = new Intent(Signin.this, MainActivity.class);
+                    Intent intent = new Intent(Signin.this, Logout.class);
                     startActivity(intent);
 
                     Log.d("jwt",""+response.body().getToken());
