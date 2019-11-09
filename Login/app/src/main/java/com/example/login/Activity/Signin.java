@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.login.Api.ApiInterface;
 import com.example.login.Entity.JsonParse;
@@ -96,6 +97,9 @@ public class Signin extends AppCompatActivity {
                     preferencesEditor.putString("token",jwt);
                     preferencesEditor.apply();
                 }
+                else if(response.code() == 471){
+                    makeToast("회원정보가 일치하지 않습니다");
+                }
                 else{
                     Log.e("response.code",""+response.code());
                 }
@@ -106,4 +110,8 @@ public class Signin extends AppCompatActivity {
             }
         });
     }
+    private void makeToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
 }
